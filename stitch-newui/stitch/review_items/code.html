@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#048acd",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0f1c23",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto min-h-screen flex flex-col bg-background-light dark:bg-background-dark shadow-xl">
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 flex items-center gap-4">
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined block">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight">Review Receipt</h1>
+</header>
+<main class="flex-1 p-4 space-y-6 pb-32">
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-sm font-bold uppercase tracking-wider text-primary">Merchant Details</h2>
+<span class="material-symbols-outlined text-primary/60">storefront</span>
+</div>
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<label class="block">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 block uppercase">Merchant Name</span>
+<input class="w-full bg-transparent border-none p-0 text-lg font-bold focus:ring-0 placeholder:text-slate-400" placeholder="Enter merchant name" type="text" value="The Italian Bistro"/>
+</label>
+</div>
+</section>
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-sm font-bold uppercase tracking-wider text-primary">Extracted Items</h2>
+<span class="material-symbols-outlined text-primary/60">receipt_long</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex-1">
+<input class="w-full bg-transparent border-none p-0 text-base font-bold focus:ring-0" type="text" value="Margherita Pizza"/>
+<div class="flex items-center gap-1 mt-1 text-slate-500 dark:text-slate-400">
+<span class="text-sm">$</span>
+<input class="w-20 bg-transparent border-none p-0 text-sm focus:ring-0" type="number" value="18.00"/>
+</div>
+</div>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex-1">
+<input class="w-full bg-transparent border-none p-0 text-base font-bold focus:ring-0" type="text" value="Red Wine (Glass)"/>
+<div class="flex items-center gap-1 mt-1 text-slate-500 dark:text-slate-400">
+<span class="text-sm">$</span>
+<input class="w-20 bg-transparent border-none p-0 text-sm focus:ring-0" type="number" value="12.00"/>
+</div>
+</div>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex-1">
+<input class="w-full bg-transparent border-none p-0 text-base font-bold focus:ring-0" type="text" value="Tiramisu"/>
+<div class="flex items-center gap-1 mt-1 text-slate-500 dark:text-slate-400">
+<span class="text-sm">$</span>
+<input class="w-20 bg-transparent border-none p-0 text-sm focus:ring-0" type="number" value="8.50"/>
+</div>
+</div>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<button class="w-full py-4 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl flex items-center justify-center gap-2 text-slate-500 hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+<span class="font-bold">Add Item</span>
+</button>
+</section>
+<section class="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center px-2">
+<span class="text-slate-500 font-medium">Subtotal</span>
+<div class="flex items-center gap-1">
+<span class="text-sm font-bold">$</span>
+<input class="w-20 text-right bg-transparent border-none p-0 font-bold focus:ring-0" type="number" value="38.50"/>
+</div>
+</div>
+<div class="flex justify-between items-center px-2">
+<span class="text-slate-500 font-medium">Tax (8.5%)</span>
+<div class="flex items-center gap-1">
+<span class="text-sm font-bold">$</span>
+<input class="w-20 text-right bg-transparent border-none p-0 font-bold focus:ring-0" type="number" value="3.27"/>
+</div>
+</div>
+<div class="flex justify-between items-center px-2 pt-2">
+<span class="text-lg font-extrabold">Total Amount</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="text-lg font-extrabold">$</span>
+<input class="w-24 text-right bg-transparent border-none p-0 text-xl font-extrabold focus:ring-0" type="number" value="41.77"/>
+</div>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-transform active:scale-95 flex items-center justify-center gap-2">
+<span>Looks Good, Continue</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+</div>
+</body></html>

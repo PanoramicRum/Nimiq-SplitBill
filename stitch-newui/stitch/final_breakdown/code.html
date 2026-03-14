@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#048acd",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0f1c23",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>SplitBill - Success</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto border-x border-slate-200 dark:border-slate-800">
+<!-- Header -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Split Details</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 cursor-pointer items-center justify-center rounded-full bg-transparent text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Success Header Section -->
+<div class="px-6 py-8 flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-5xl">check_circle</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-3xl font-extrabold leading-tight mb-2">Success! Bill Split</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-medium">Total: <span class="text-slate-900 dark:text-slate-100">$145.00</span> • 3 People</p>
+</div>
+<!-- What everyone owes -->
+<div class="px-6 pb-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight mb-4">What everyone owes</h3>
+<div class="space-y-4">
+<!-- Person Card 1 -->
+<div class="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">JD</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold">John Doe</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Paid their share</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary text-lg font-bold">$52.50</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Steak Dinner</span>
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Red Wine</span>
+</div>
+</div>
+<!-- Person Card 2 -->
+<div class="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold">AS</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Alice Smith</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Pending payment</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary text-lg font-bold">$48.25</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Salmon Salad</span>
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Mocktail</span>
+</div>
+</div>
+<!-- Person Card 3 -->
+<div class="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold">BM</div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 font-bold">Bob Miller</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Pending payment</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary text-lg font-bold">$44.25</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Burger Deluxe</span>
+<span class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-400">Beer</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Share Section -->
+<div class="px-6 py-8 flex flex-col items-center gap-6">
+<div class="p-6 bg-white rounded-lg shadow-lg border-4 border-primary/20">
+<div class="size-48 bg-slate-100 flex items-center justify-center relative rounded-lg overflow-hidden">
+<div class="absolute inset-0 flex items-center justify-center opacity-10">
+<span class="material-symbols-outlined text-9xl">qr_code_2</span>
+</div>
+<div class="grid grid-cols-4 grid-rows-4 gap-2 w-32 h-32 opacity-80">
+<div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-300 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div>
+<div class="bg-slate-300 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-300 rounded-sm"></div>
+<div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-300 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div>
+<div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div><div class="bg-slate-300 rounded-sm"></div><div class="bg-slate-900 rounded-sm"></div>
+</div>
+</div>
+<p class="text-slate-900 text-center mt-4 text-sm font-bold">Scan to join the split</p>
+</div>
+<div class="flex flex-col w-full gap-3">
+<button class="w-full h-14 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">link</span>
+                    Copy Share Link
+                </button>
+<button class="w-full h-14 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    New Split
+                </button>
+</div>
+</div>
+<!-- Spacer for Bottom Nav -->
+<div class="h-20"></div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-20">
+<div class="flex justify-around items-center">
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-xs font-medium">Home</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">receipt_long</span>
+<p class="text-xs font-medium">History</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-xs font-medium">Friends</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<p class="text-xs font-medium">Profile</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

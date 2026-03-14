@@ -23,9 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Design mockups
-stitch/
-stitch-newui/
+# Design mockups (old version)
+/stitch/
 __MACOSX/
 
 # Environment files

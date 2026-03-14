@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#048acd",
+                "background-light": "#f5f7f8",
+                "background-dark": "#0f1c23",
+              },
+              fontFamily: {
+                "display": ["Manrope"]
+              },
+              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark overflow-x-hidden border-x border-primary/10">
+<!-- Top App Bar -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">Split Bill</h2>
+<div class="size-12 shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">help_outline</span>
+</div>
+</div>
+<!-- Progress Stepper -->
+<div class="flex flex-col gap-3 p-4">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-slate-900 dark:text-slate-100 text-base font-semibold">Step 1 of 3</p>
+<p class="text-primary text-sm font-bold">33%</p>
+</div>
+<div class="rounded-full bg-primary/20 h-2.5 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 33%;"></div>
+</div>
+</div>
+<!-- Main Heading -->
+<div class="px-4 pt-6 pb-2">
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-3xl font-extrabold leading-tight">Who’s splitting this?</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-2">Add your friends to start dividing the expenses.</p>
+</div>
+<!-- Input Section -->
+<div class="px-4 py-6">
+<label class="flex flex-col gap-2">
+<span class="text-slate-900 dark:text-slate-100 text-sm font-bold uppercase tracking-wider">Add person by nickname</span>
+<div class="flex w-full items-stretch rounded-xl overflow-hidden border border-primary/20 bg-white dark:bg-slate-800/50 shadow-sm">
+<input class="flex-1 bg-transparent border-none text-slate-900 dark:text-slate-100 focus:ring-0 h-14 px-4 placeholder:text-slate-400 text-base" placeholder="e.g. Alex, Sarah, Mike" type="text"/>
+<button class="bg-primary text-white flex items-center justify-center px-5 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+</label>
+</div>
+<!-- Selected People List -->
+<div class="flex-1 px-4 pb-24">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold mb-4 flex items-center gap-2">
+                People in the split
+                <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full">4</span>
+</h3>
+<div class="space-y-3">
+<!-- Person Item 1 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-800/40 border border-primary/5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center font-bold text-lg">
+                            JD
+                        </div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100 leading-none">Jane Doe</p>
+<p class="text-xs text-slate-500 mt-1 uppercase font-semibold">You</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-primary/5 rounded-lg p-1">
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-4 text-center font-bold">1</span>
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+<!-- Person Item 2 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-800/40 border border-primary/5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-bold text-lg">
+                            AS
+                        </div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100">Alex Smith</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-primary/5 rounded-lg p-1">
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-4 text-center font-bold">2</span>
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+<!-- Person Item 3 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-800/40 border border-primary/5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center font-bold text-lg">
+                            MK
+                        </div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100">Mike Kim</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-primary/5 rounded-lg p-1">
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-4 text-center font-bold">1</span>
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+<!-- Person Item 4 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-800/40 border border-primary/5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-blue-500/20 text-blue-500 flex items-center justify-center font-bold text-lg">
+                            RL
+                        </div>
+<div>
+<p class="font-bold text-slate-900 dark:text-slate-100">Riley Lane</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-primary/5 rounded-lg p-1">
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-4 text-center font-bold">1</span>
+<button class="size-8 rounded-md bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom CTA -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 dark:via-background-dark/95 to-transparent">
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95">
+                Continue to Split
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

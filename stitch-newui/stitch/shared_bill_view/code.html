@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SplitBill - Share Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#048acd",
+              "background-light": "#f5f7f8",
+              "background-dark": "#0f1c23",
+            },
+            fontFamily: {
+              "display": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="flex items-center p-4 justify-between bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-primary/20 text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Payment Summary</h2>
+</nav>
+<!-- Main Content -->
+<main class="max-w-md mx-auto px-4 pb-12">
+<!-- Merchant Information Card -->
+<div class="flex flex-col items-center py-8">
+<div class="bg-primary/10 p-1 rounded-full mb-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-24 h-24" data-alt="Blue Bottle Coffee minimalist shop logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAuQIDILpD20rfJVKl6siv7LOdbEUyTPHEMTSyDgDLx0SIWLTahrMUWYfoH8N9rbeZ1SumLiafhBZDWmt8rM3IW6Gm0HM6hFuXVb2JN0lHrpij110oWQ7vVgaiX_eEfSDVc8zpBKu_fxkyoydMt8U104HOEr30q6iqJg-r4SPy-Dp9Gy3Gyf_0-4CI0Eo5wbyqdbenkc_XZLH5IW1_E365Lb4jB9PJqnIGMYQToIwn8mcuRU_aEsirDrSZQyYdjcb3mLYHpK6d9ZNQ");'></div>
+</div>
+<div class="text-center">
+<h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Blue Bottle Coffee</h1>
+<p class="text-slate-500 dark:text-primary/60 text-sm font-medium">Order #8492 • Today, 2:45 PM</p>
+</div>
+</div>
+<!-- Owed Amount (Focus Area) -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-8 mb-8 text-center">
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Your Portion to Pay</p>
+<div class="text-5xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">$14.50</div>
+<div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">verified</span>
+                Calculated by Host
+            </div>
+</div>
+<!-- Bill Details Breakdown -->
+<section class="mb-8">
+<h3 class="text-lg font-bold mb-4 px-1">Bill Summary</h3>
+<div class="space-y-4 bg-white dark:bg-slate-800/40 p-5 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400">Merchant Total</span>
+<span class="font-semibold">$52.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400">Taxes &amp; Fees</span>
+<span class="font-semibold">$4.80</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 dark:text-slate-400">Gratuity (15%)</span>
+<span class="font-semibold">$7.80</span>
+</div>
+<div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
+<div class="flex justify-between items-center">
+<span class="font-bold">Grand Total</span>
+<span class="font-bold text-lg">$64.60</span>
+</div>
+</div>
+</section>
+<!-- Participants / Context -->
+<section class="mb-10">
+<h3 class="text-lg font-bold mb-4 px-1">Splitting With</h3>
+<div class="flex -space-x-3 items-center">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-slate-300 overflow-hidden" data-alt="Avatar of Sarah">
+<img alt="S" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Xvrd6y1cbX_KPq2MQmxdnL0-eNtEGHVucon8j9QIgQn5MXR8oiQMCB8xu_9bfjv5XGTxURDum-Vk2hAPrEQuO7vUGvgnzX51FjIrBrbli7iRpUZAHaryUdjEHjPNHc-s5za1VAptcLRsmOeoGtpSTPGjkFIIjN0K1J7UwVQTnIq_PQrobTLCyQgBZbfzB9p9uC7BW2VFJvgxDGH2wXnEfdDPwMsZPiUzssAn7gUcRBAW64eKdoB6-DYWgYySfiIceEnXVsjCQeg"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-slate-300 overflow-hidden" data-alt="Avatar of Mike">
+<img alt="M" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpdBurXglvJPrjn0TZNd5ecp2mJLabgjPDA0WP-UuIDE-XpwjFQoltaDnoumGoVLO05UKS1eJDdqTg7qm6t-y0gJzrVwPGqkiOtgKsVVVo4g1YRWyowrS6VZHFqBViPsDVX9pWQL8nvpG0OUT3LFYLZ9Q1gSjSMiJpu2oUgQolCsP6QWsvrD3B4kH0M6eg_wc3xvHERfPy8mhpD7IGAmj_wtOl4c5owM_BD4plxbuugEPCkZvpFVk9DaGj1M-6kNNZi4ewctXTY44"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-slate-300 overflow-hidden" data-alt="Avatar of Jessica">
+<img alt="J" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACoRd9EN_eEaa8AwYTmHEkd5tHPP92ZwaC8r2v9BVk5NeToRGbm_gzq2G6uRBXUGLht-ynOi9UexkxSzEXrzZyiuUTnRC6jQR1TlZmF9fopEqU_Z-HPK-8OHiW9SsoDUHKGOluTHQWXmRp3ChaB_m9Ok2FxXSst_OMWHhbn8sDbCk4DS2mIZ2hVVrUrmLo9eYB7WOKdLmkNM7UhNQPeKm5F9-UFgQnFgIOHym6L5y2STFmKwrrDrMXUENGEnnvWhqZin0jAnQQ4Zg"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-primary flex items-center justify-center text-[10px] font-bold text-white">
+                    +2
+                </div>
+<p class="ml-6 text-sm text-slate-500 dark:text-slate-400 font-medium">Split equally (5 people)</p>
+</div>
+</section>
+<!-- Action Area -->
+<div class="space-y-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined">payments</span>
+                Pay $14.50 to Sarah
+            </button>
+<button class="w-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold py-4 rounded-lg transition-colors">
+                Save Receipt
+            </button>
+</div>
+<p class="text-center text-slate-500 dark:text-slate-500 text-xs mt-8">
+            Securely processed via SplitBill Connect. <br/>
+            Questions? Contact the bill host Sarah.
+        </p>
+</main>
+<!-- Bottom Padding for mobile safe area -->
+<div class="h-8"></div>
+</body></html>
