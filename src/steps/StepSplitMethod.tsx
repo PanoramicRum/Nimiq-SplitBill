@@ -11,7 +11,7 @@ interface MethodOption {
   title: string;
   description: string;
   route: string;
-  requiresScan?: boolean;
+  requiresItems?: boolean;
   badge?: string;
 }
 
@@ -31,7 +31,7 @@ const METHODS: MethodOption[] = [
     title: 'Assign Items',
     description: 'Each person pays only for the specific items they ordered.',
     route: '/split/items',
-    requiresScan: true,
+    requiresItems: true,
   },
   {
     id: 'percentage',
@@ -46,11 +46,13 @@ const METHODS: MethodOption[] = [
 
 export function StepSplitMethod() {
   const navigate = useNavigate();
-  const billSource = useBillStore((s) => s.billSource);
   const setSplitMethod = useBillStore((s) => s.setSplitMethod);
 
+  const items = useBillStore((s) => s.items);
+  const hasItems = items.length > 0;
+
   const availableMethods = METHODS.filter(
-    (m) => !m.requiresScan || billSource === 'scan',
+    (m) => !m.requiresItems || hasItems,
   );
 
   const handleSelect = (method: MethodOption) => {
@@ -128,7 +130,7 @@ export function StepSplitMethod() {
         </div>
 
         {/* Smart Scan promo */}
-        {billSource !== 'scan' && (
+        {!hasItems && (
           <div className="relative mt-12 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary/60 p-6 text-white shadow-lg">
             <div className="relative z-10">
               <h4 className="text-lg font-bold">Smart Scan</h4>
