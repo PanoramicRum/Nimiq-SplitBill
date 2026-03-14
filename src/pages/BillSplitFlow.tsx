@@ -4,9 +4,9 @@ import { ScreenShell } from '../components/layout/ScreenShell';
 import { ProgressStepper } from '../components/layout/ProgressStepper';
 
 const pageVariants = {
-  initial: { opacity: 0, x: 20 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -20 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 function getStepFromPath(pathname: string): number {
@@ -38,7 +38,7 @@ export function BillSplitFlow() {
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={{ duration: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.12, ease: 'easeOut' }}
           className="flex min-h-0 flex-1 flex-col"
         >
           <Outlet />
