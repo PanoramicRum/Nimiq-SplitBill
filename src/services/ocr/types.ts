@@ -13,7 +13,11 @@ export interface OCRResult {
   raw?: string;
 }
 
+export interface OCROptions {
+  currencyCode?: string;
+}
+
 export interface OCRProvider {
   name: string;
-  processImage(imageData: File | Blob | string): Promise<OCRResult>;
+  processImage(imageData: File | Blob | string, options?: OCROptions): Promise<OCRResult>;
 }

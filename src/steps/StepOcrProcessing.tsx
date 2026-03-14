@@ -25,7 +25,8 @@ export function StepOcrProcessing() {
       try {
         setStatus('Reading text from bill...');
         const provider = getOCRProvider();
-        const result = await provider.processImage(image);
+        const currencyCode = useBillStore.getState().currencyCode;
+        const result = await provider.processImage(image, { currencyCode });
 
         if (cancelled) return;
 

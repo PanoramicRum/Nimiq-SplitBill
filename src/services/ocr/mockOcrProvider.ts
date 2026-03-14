@@ -1,9 +1,9 @@
-import type { OCRProvider, OCRResult } from './types';
+import type { OCRProvider, OCRResult, OCROptions } from './types';
 
 export class MockOCRProvider implements OCRProvider {
   name = 'mock';
 
-  async processImage(_imageData: File | Blob | string): Promise<OCRResult> {
+  async processImage(_imageData: File | Blob | string, _options?: OCROptions): Promise<OCRResult> {
     // Simulate network/processing delay
     await new Promise((resolve) => setTimeout(resolve, 1500));
 

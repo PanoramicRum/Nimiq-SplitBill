@@ -1,6 +1,5 @@
 import Tesseract from 'tesseract.js';
-import type { OCRProvider, OCRResult } from './types';
-import { useBillStore } from '../../store/useBillStore';
+import type { OCRProvider, OCRResult, OCROptions } from './types';
 import { parseReceipt } from './receiptParser';
 import type { WordBox } from './receiptParser';
 
@@ -73,8 +72,8 @@ function extractWordBoxes(data: Tesseract.Page): { words: WordBox[]; width: numb
 export class TesseractOCRProvider implements OCRProvider {
   name = 'tesseract';
 
-  async processImage(imageData: File | Blob | string): Promise<OCRResult> {
-    const currencyCode = useBillStore.getState().currencyCode;
+  async processImage(imageData: File | Blob | string, options?: OCROptions): Promise<OCRResult> {
+    const currencyCode = options?.currencyCode ?? 'USD';
     const lang = getLangForCurrency(currencyCode);
     const langs = lang === 'eng' ? 'eng' : `eng+${lang}`;
 
