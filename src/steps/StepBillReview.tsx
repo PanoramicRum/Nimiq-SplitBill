@@ -65,7 +65,7 @@ function PriceInput({
       value={localValue}
       onChange={handleChange}
       onBlur={handleBlur}
-      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+      className="w-20 bg-transparent border-none p-0 text-sm font-bold focus:ring-0 text-slate-900 dark:text-white"
     />
   );
 }
@@ -112,7 +112,7 @@ function QuantityInput({
       value={localValue}
       onChange={handleChange}
       onBlur={handleBlur}
-      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+      className="w-12 bg-transparent border-none p-0 text-sm font-bold text-center focus:ring-0 text-slate-900 dark:text-white"
     />
   );
 }
@@ -125,6 +125,8 @@ export function StepBillReview() {
   const removeItem = useBillStore((s) => s.removeItem);
   const addItem = useBillStore((s) => s.addItem);
   const ocrConfidence = useBillStore((s) => s.ocrConfidence);
+  const currencyCode = useBillStore((s) => s.currencyCode);
+  const currency = CURRENCIES.find((c) => c.code === currencyCode);
   const [editingId, setEditingId] = useState<string | null>(null);
   const editRef = useRef<HTMLDivElement>(null);
 
@@ -173,12 +175,12 @@ export function StepBillReview() {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <TopBar title="Review Bill" />
+      <TopBar title="Review Receipt" />
 
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div className="flex-1 space-y-6 overflow-y-auto p-4 pb-32">
         {/* Confidence badge */}
         {confidenceLabel && (
-          <div className={`mb-4 flex items-center gap-2 rounded-lg bg-${confidenceColor}/10 px-3 py-2`}>
+          <div className={`flex items-center gap-2 rounded-xl bg-${confidenceColor}/10 px-4 py-3 border border-${confidenceColor}/20`}>
             <Icon name={confidenceIcon} className={`text-lg text-${confidenceColor}`} />
             <span className={`text-sm font-medium text-${confidenceColor}`}>
               {confidenceLabel}
@@ -187,115 +189,105 @@ export function StepBillReview() {
           </div>
         )}
 
-        <div className="mb-2 flex items-center justify-between">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-            {items.length} items detected
-          </h3>
-          <button
-            onClick={handleAddItem}
-            className="flex items-center gap-1 text-sm font-semibold text-primary"
-          >
-            <Icon name="add" className="text-lg" />
-            Add item
-          </button>
-        </div>
+        {/* Extracted Items */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
+              Extracted Items
+            </h2>
+            <Icon name="receipt_long" className="text-primary/60" />
+          </div>
 
-        <div className="space-y-3">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              ref={editingId === item.id ? editRef : undefined}
-              className="rounded-xl border border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-800"
-            >
-              {editingId === item.id ? (
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    value={item.name}
-                    autoFocus
-                    onChange={(e) =>
-                      updateItem(item.id, { name: e.target.value })
-                    }
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
-                  />
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <label className="mb-1 block text-xs text-slate-500">
-                        Price
-                      </label>
-                      <PriceInput
-                        cents={item.price}
-                        onChange={(price) => updateItem(item.id, { price })}
-                      />
+          <div className="space-y-3">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                ref={editingId === item.id ? editRef : undefined}
+                className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800/50"
+              >
+                {editingId === item.id ? (
+                  <div className="flex-1 space-y-3">
+                    <input
+                      type="text"
+                      value={item.name}
+                      autoFocus
+                      onChange={(e) =>
+                        updateItem(item.id, { name: e.target.value })
+                      }
+                      className="w-full bg-transparent border-none p-0 text-base font-bold focus:ring-0 text-slate-900 dark:text-white"
+                    />
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                        <span className="text-sm">{currency?.symbol ?? '$'}</span>
+                        <PriceInput
+                          cents={item.price}
+                          onChange={(price) => updateItem(item.id, { price })}
+                        />
+                      </div>
+                      <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                        <span className="text-xs">Qty:</span>
+                        <QuantityInput
+                          quantity={item.quantity}
+                          onChange={(quantity) => updateItem(item.id, { quantity })}
+                        />
+                      </div>
                     </div>
-                    <div className="w-20">
-                      <label className="mb-1 block text-xs text-slate-500">
-                        Qty
-                      </label>
-                      <QuantityInput
-                        quantity={item.quantity}
-                        onChange={(quantity) =>
-                          updateItem(item.id, { quantity })
-                        }
-                      />
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setEditingId(null)}
-                    className="text-sm font-semibold text-primary"
-                  >
-                    Done
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">
-                      {item.name}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Qty: {item.quantity}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-slate-900 dark:text-white">
-                      {formatCurrency(item.price)}
-                    </span>
                     <button
-                      onClick={() => setEditingId(item.id)}
-                      className="flex size-8 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+                      onClick={() => setEditingId(null)}
+                      className="text-sm font-bold text-primary"
                     >
-                      <Icon name="edit" className="text-lg" />
+                      Done
                     </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex-1" onClick={() => setEditingId(item.id)}>
+                      <p className="text-base font-bold text-slate-900 dark:text-white">
+                        {item.name}
+                      </p>
+                      <div className="mt-1 flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                        <span className="text-sm">{currency?.symbol ?? '$'}</span>
+                        <span className="text-sm">{formatCurrency(item.price).replace(/^[^\d]*/, '')}</span>
+                        {item.quantity > 1 && (
+                          <span className="ml-2 text-xs">x{item.quantity}</span>
+                        )}
+                      </div>
+                    </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="flex size-8 items-center justify-center rounded-full text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      className="p-2 text-slate-400 transition-colors hover:text-red-500"
                     >
-                      <Icon name="delete" className="text-lg" />
+                      <Icon name="delete" />
                     </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
 
-        {/* Total */}
-        <div className="mt-4 flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 dark:bg-slate-800">
-          <span className="font-semibold text-slate-600 dark:text-slate-400">
-            Subtotal
-          </span>
-          <span className="text-xl font-bold text-slate-900 dark:text-white">
-            {formatCurrency(billAmountCents)}
-          </span>
-        </div>
+          {/* Add item button */}
+          <button
+            onClick={handleAddItem}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 py-4 text-slate-500 transition-colors hover:bg-primary/5 dark:border-slate-700"
+          >
+            <Icon name="add_circle" className="text-xl" />
+            <span className="font-bold">Add Item</span>
+          </button>
+        </section>
 
-        {/* Extra padding so last item is visible above keyboard */}
-        <div className="h-32" />
+        {/* Totals */}
+        <section className="space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
+          <div className="flex items-center justify-between px-2">
+            <span className="text-lg font-extrabold text-slate-900 dark:text-white">Total Amount</span>
+            <span className="text-xl font-extrabold text-primary">
+              {formatCurrency(billAmountCents)}
+            </span>
+          </div>
+        </section>
       </div>
 
       <BottomCTA
-        label="Looks good"
+        label="Looks Good, Continue"
         onClick={() => navigate('/tip')}
         disabled={items.length === 0}
       />

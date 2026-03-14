@@ -37,15 +37,15 @@ export function CurrencyPicker({ open, onClose }: CurrencyPickerProps) {
       />
 
       {/* Modal */}
-      <div className="relative z-10 flex max-h-[80vh] w-full max-w-md flex-col rounded-t-2xl bg-white dark:bg-slate-900 sm:rounded-2xl">
+      <div className="relative z-10 flex max-h-[80vh] w-full max-w-md flex-col rounded-t-2xl bg-white shadow-2xl dark:bg-bg-dark sm:rounded-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-slate-700">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Select Currency
           </h2>
           <button
             onClick={onClose}
-            className="flex size-8 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="flex size-10 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/20"
           >
             <Icon name="close" />
           </button>
@@ -53,7 +53,7 @@ export function CurrencyPicker({ open, onClose }: CurrencyPickerProps) {
 
         {/* Search */}
         <div className="px-5 py-3">
-          <div className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-2.5 dark:bg-slate-800">
+          <div className="flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-3 dark:bg-slate-800/50">
             <Icon name="search" className="text-lg text-slate-400" />
             <input
               type="text"
@@ -73,8 +73,8 @@ export function CurrencyPicker({ open, onClose }: CurrencyPickerProps) {
               onClick={() => handleSelect(c.code)}
               className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors ${
                 c.code === currencyCode
-                  ? 'bg-primary/10'
-                  : 'hover:bg-slate-50 dark:hover:bg-slate-800'
+                  ? 'bg-primary/10 border border-primary/20'
+                  : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
               }`}
             >
               <span className="text-2xl">{c.flag}</span>

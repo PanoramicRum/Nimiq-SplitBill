@@ -56,7 +56,7 @@ export function StepAssignItems() {
       <div className="flex-1 overflow-y-auto">
         {/* Running totals horizontal scroll */}
         <div className="flex gap-2 overflow-x-auto px-4 py-3">
-          <div className="shrink-0 rounded-lg bg-primary px-3 py-2 text-center">
+          <div className="shrink-0 rounded-xl bg-primary px-3 py-2 text-center">
             <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
               Total Bill
             </p>
@@ -69,12 +69,12 @@ export function StepAssignItems() {
           {people.map((person) => (
             <div
               key={person.id}
-              className="shrink-0 rounded-lg border border-slate-100 bg-white px-3 py-2 text-center dark:border-slate-800 dark:bg-slate-800"
+              className="shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center dark:border-slate-700 dark:bg-slate-800/50"
             >
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 {person.name}
               </p>
-              <p className="text-lg font-bold text-slate-900 dark:text-white">
+              <p className="text-lg font-bold text-primary">
                 {formatCurrency(totals.get(person.id) ?? 0)}
               </p>
             </div>
@@ -102,19 +102,19 @@ export function StepAssignItems() {
                 className={`rounded-xl border p-4 ${
                   isUnassigned
                     ? 'border-2 border-dashed border-primary/30 bg-primary/5 dark:bg-primary/10'
-                    : 'border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-800'
+                    : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800/50'
                 }`}
               >
                 <div className="mb-2 flex items-center justify-between">
                   <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                    <p className="font-bold text-slate-900 dark:text-white">
                       {item.name}
                     </p>
                     <p className="text-sm text-slate-500">
                       Qty: {item.quantity}
                     </p>
                   </div>
-                  <span className="text-lg font-bold text-slate-900 dark:text-white">
+                  <span className="text-lg font-bold text-primary">
                     {formatCurrency(item.price)}
                   </span>
                 </div>
@@ -160,14 +160,14 @@ export function StepAssignItems() {
         </div>
 
         {/* Progress bar */}
-        <div className="sticky bottom-16 mx-4 mb-2 rounded-lg bg-white/90 px-4 py-2 shadow-lg backdrop-blur-md dark:bg-slate-900/90">
+        <div className="sticky bottom-16 mx-4 mb-2 rounded-xl bg-white/90 px-4 py-2 shadow-lg backdrop-blur-md dark:bg-slate-900/90">
           <div className="mb-1 flex justify-between text-sm">
             <span className="text-slate-500">Progress</span>
             <span className="font-semibold text-primary">
               {assignedCount} of {items.length} items assigned
             </span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
+          <div className="h-2 overflow-hidden rounded-full bg-primary/20">
             <div
               className="h-full rounded-full bg-primary transition-all"
               style={{

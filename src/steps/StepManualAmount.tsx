@@ -48,36 +48,45 @@ export function StepManualAmount() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <TopBar title="Enter Amount" />
+      <TopBar title="Split Bill" />
 
-      <div className="flex flex-1 flex-col items-center justify-between px-6 py-8">
-        {/* Amount display */}
-        <div className="flex flex-col items-center">
-          <div className="mb-2 rounded-full bg-primary/10 px-3 py-1">
-            <span className="text-xs font-bold text-primary">{currencyCode}</span>
-          </div>
-          <div className="flex items-baseline">
-            <span className="text-4xl font-medium text-slate-400">{currency?.symbol ?? '$'}</span>
-            <span className="text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              {display}
-            </span>
-          </div>
-          <p className="mt-2 text-sm text-slate-400 dark:text-slate-500">
-            Enter the total bill amount
+      <div className="flex flex-1 flex-col items-center justify-between px-6 pt-8">
+        {/* Main Question */}
+        <div className="text-center">
+          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            What's the total bill?
+          </h1>
+          <p className="font-medium text-slate-500 dark:text-primary/60">
+            Enter the final amount from your receipt
           </p>
+        </div>
+
+        {/* Currency badge */}
+        <div className="mt-6 inline-flex rounded-full bg-slate-200/50 p-1.5 dark:bg-primary/10">
+          <span className="rounded-full bg-primary px-6 py-2 font-bold text-white shadow-lg shadow-primary/20">
+            {currency?.symbol ?? '$'}
+          </span>
+        </div>
+
+        {/* Amount display */}
+        <div className="mt-8 flex items-baseline">
+          <span className="text-4xl font-bold text-primary">{currency?.symbol ?? '$'}</span>
+          <span className="text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {display}
+          </span>
         </div>
 
         {/* Item-by-item entry option */}
         <button
           onClick={() => navigate('/manual/items')}
-          className="mt-4 flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition-all active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
+          className="mt-6 flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition-all active:scale-95 dark:border-primary/20 dark:bg-slate-800/50 dark:text-slate-400"
         >
           <Icon name="receipt_long" className="text-lg text-primary" />
           Add items instead
         </button>
 
         {/* Numeric keypad */}
-        <div className="mt-4 grid w-full max-w-xs grid-cols-3 gap-3">
+        <div className="mt-6 grid w-full max-w-xs grid-cols-3 gap-3">
           {KEYS.map((key, idx) => (
             <button
               key={idx}
@@ -87,8 +96,8 @@ export function StepManualAmount() {
                 key === ''
                   ? 'invisible'
                   : key === 'del'
-                    ? 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-                    : 'bg-white text-slate-900 shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700'
+                    ? 'bg-slate-100 text-slate-600 dark:bg-slate-800/50 dark:text-slate-400'
+                    : 'bg-white text-slate-900 shadow-sm hover:bg-slate-50 dark:bg-slate-800/50 dark:text-white dark:hover:bg-slate-700'
               }`}
             >
               {key === 'del' ? (
@@ -102,7 +111,7 @@ export function StepManualAmount() {
       </div>
 
       <BottomCTA
-        label="Continue"
+        label="Next"
         onClick={handleContinue}
         disabled={amountCents === 0}
       />

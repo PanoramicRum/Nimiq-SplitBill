@@ -22,12 +22,12 @@ export function TopBar({ title, showBack = true, onBack, trailing }: TopBarProps
   };
 
   return (
-    <div className="sticky top-0 z-20 flex items-center justify-between border-b border-slate-100 bg-white/80 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/80">
+    <div className="sticky top-0 z-20 flex items-center justify-between bg-bg-light/80 px-4 py-3 backdrop-blur-md dark:bg-bg-dark/80">
       <div className="flex items-center gap-2">
         {showBack && (
           <button
             onClick={handleBack}
-            className="flex size-10 items-center justify-center rounded-full text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="flex size-12 items-center justify-center rounded-full bg-slate-200 text-slate-900 transition-colors hover:bg-slate-300 dark:bg-primary/20 dark:text-primary dark:hover:bg-primary/30"
             aria-label="Go back"
           >
             <Icon name="arrow_back" />
@@ -35,7 +35,7 @@ export function TopBar({ title, showBack = true, onBack, trailing }: TopBarProps
         )}
       </div>
       {title && (
-        <h1 className="text-lg font-bold text-slate-900 dark:text-white">
+        <h1 className="flex-1 text-center text-lg font-bold tracking-tight text-slate-900 dark:text-white">
           {title}
         </h1>
       )}

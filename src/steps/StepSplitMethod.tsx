@@ -7,34 +7,40 @@ import type { SplitMethod } from '../types';
 interface MethodOption {
   id: SplitMethod;
   icon: string;
+  bgIcon: string;
   title: string;
   description: string;
   route: string;
   requiresScan?: boolean;
+  badge?: string;
 }
 
 const METHODS: MethodOption[] = [
   {
+    id: 'even',
+    icon: 'drag_handle',
+    bgIcon: 'equalizer',
+    title: 'Split Evenly',
+    description: 'Divide the total cost equally among all participants.',
+    route: '/split/even',
+  },
+  {
     id: 'items',
-    icon: 'assignment',
-    title: 'Assign items to people',
-    description: 'Each person pays for what they ordered',
+    icon: 'checklist',
+    bgIcon: 'receipt_long',
+    title: 'Assign Items',
+    description: 'Each person pays only for the specific items they ordered.',
     route: '/split/items',
     requiresScan: true,
   },
   {
-    id: 'even',
-    icon: 'balance',
-    title: 'Split evenly',
-    description: 'Everyone pays the same amount',
-    route: '/split/even',
-  },
-  {
     id: 'percentage',
     icon: 'pie_chart',
-    title: 'Split by percentages',
-    description: 'Assign custom percentages per person',
+    bgIcon: 'pie_chart',
+    title: 'Split by %',
+    description: 'Define custom percentages for each person in the group.',
     route: '/split/percentage',
+    badge: 'Popular',
   },
 ];
 
@@ -52,51 +58,95 @@ export function StepSplitMethod() {
     navigate(method.route);
   };
 
+  // First method gets primary styling
+  const isFirst = (i: number) => i === 0;
+
   return (
     <div className="flex flex-1 flex-col">
-      <TopBar title="Split Method" />
+      <TopBar title="New Split" />
 
-      <div className="flex-1 px-4 py-6">
-        <h2 className="mb-2 text-center text-2xl font-extrabold text-slate-900 dark:text-white">
-          How should we split it?
-        </h2>
-        <p className="mb-8 text-center text-sm text-slate-500 dark:text-slate-400">
-          Choose a splitting method
-        </p>
+      <div className="flex-1 px-6 py-6">
+        <div className="mb-8">
+          <h2 className="mb-2 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Split Method
+          </h2>
+          <p className="text-slate-500 dark:text-slate-400">
+            Choose how you'd like to divide the bill with your group.
+          </p>
+        </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {availableMethods.map((method, i) => (
             <button
               key={method.id}
               onClick={() => handleSelect(method)}
-              className="flex w-full items-center gap-4 rounded-xl border-2 border-slate-100 bg-white p-4 text-left transition-all hover:border-primary/30 hover:bg-primary/5 active:scale-[0.98] dark:border-slate-800 dark:bg-slate-800 dark:hover:border-primary/30 dark:hover:bg-primary/10"
+              className="group relative w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-6 text-left transition-all hover:border-primary dark:border-primary/20 dark:bg-primary/5"
             >
-              <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Icon name={method.icon} className="text-2xl" />
+              {/* Decorative background icon */}
+              <div className="absolute right-0 top-0 p-4 opacity-10">
+                <Icon name={method.bgIcon} className="text-6xl" />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-slate-900 dark:text-white">
-                    {method.title}
-                  </span>
-                  {i === (billSource === 'scan' ? 0 : 0) &&
-                    method.id === 'even' && (
-                      <span className="rounded-full bg-nimiq-green/10 px-2 py-0.5 text-[10px] font-bold uppercase text-nimiq-green">
-                        Default
+
+              <div className="flex items-start gap-4">
+                <div
+                  className={`flex size-12 items-center justify-center rounded-full ${
+                    isFirst(i)
+                      ? 'bg-primary text-white'
+                      : 'bg-primary/20 text-primary'
+                  }`}
+                >
+                  <Icon name={method.icon} className="text-2xl" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      {method.title}
+                    </h3>
+                    {method.badge && (
+                      <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold uppercase text-primary">
+                        {method.badge}
                       </span>
                     )}
+                  </div>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    {method.description}
+                  </p>
+                  <div
+                    className={`mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-transform active:scale-95 ${
+                      isFirst(i)
+                        ? 'bg-primary text-white'
+                        : 'bg-slate-200 text-slate-900 dark:bg-primary/20 dark:text-primary'
+                    }`}
+                  >
+                    Select
+                    <Icon name="chevron_right" className="text-sm" />
+                  </div>
                 </div>
-                <span className="text-sm text-slate-500 dark:text-slate-400">
-                  {method.description}
-                </span>
               </div>
-              <Icon
-                name="arrow_forward"
-                className="text-lg text-slate-400"
-              />
             </button>
           ))}
         </div>
+
+        {/* Smart Scan promo */}
+        {billSource !== 'scan' && (
+          <div className="relative mt-12 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary/60 p-6 text-white shadow-lg">
+            <div className="relative z-10">
+              <h4 className="text-lg font-bold">Smart Scan</h4>
+              <p className="mt-1 text-sm opacity-90">
+                Scan your receipt and let AI automatically detect items and prices.
+              </p>
+              <button
+                onClick={() => navigate('/scan')}
+                className="mt-4 rounded-full bg-white px-4 py-2 text-sm font-bold text-primary"
+              >
+                Try Now
+              </button>
+            </div>
+            <div className="absolute -bottom-4 -right-4 opacity-20">
+              <Icon name="document_scanner" className="text-[96px]" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

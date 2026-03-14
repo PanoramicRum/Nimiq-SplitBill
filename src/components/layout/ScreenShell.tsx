@@ -14,7 +14,7 @@ export function ScreenShell({ children, className = '' }: ScreenShellProps) {
       style={{ height: shellHeight }}
     >
       <div
-        className={`flex w-full max-w-md flex-col bg-white shadow-xl dark:bg-slate-900 ${className}`}
+        className={`flex w-full max-w-md flex-col bg-bg-light shadow-xl dark:border-x dark:border-primary/10 dark:bg-bg-dark ${className}`}
         style={{ height: shellHeight }}
       >
         {children}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TopBar } from '../components/layout/TopBar';
-import { BottomCTA } from '../components/layout/BottomCTA';
+import { Icon } from '../components/ui/Icon';
 import { useBillStore } from '../store/useBillStore';
 import { calculateTipCents } from '../utils/calculations';
 import { formatCurrency } from '../utils/formatCurrency';
@@ -13,11 +13,13 @@ export function StepTip() {
   const billAmountCents = useBillStore((s) => s.billAmountCents);
   const tipConfig = useBillStore((s) => s.tipConfig);
   const setTipConfig = useBillStore((s) => s.setTipConfig);
+  const people = useBillStore((s) => s.people);
   const [showCustom, setShowCustom] = useState(false);
   const [customValue, setCustomValue] = useState('');
 
   const tipCents = calculateTipCents(billAmountCents, tipConfig);
   const grandTotal = billAmountCents + tipCents;
+  const perPerson = people.length > 0 ? Math.ceil(grandTotal / people.length) : grandTotal;
 
   const handlePreset = (pct: number) => {
     setShowCustom(false);
@@ -41,114 +43,127 @@ export function StepTip() {
     setTipConfig({ mode: 'fixed', percentage: 0, fixedAmount: cents });
   };
 
+  const activeLabel = tipConfig.mode === 'percentage'
+    ? `${tipConfig.percentage}% selected`
+    : tipConfig.mode === 'fixed'
+      ? 'Custom amount'
+      : 'No tip';
+
   return (
     <div className="flex flex-1 flex-col">
-      <TopBar title="Tip" />
+      <TopBar title="Add a Tip" />
 
-      <div className="flex-1 px-6 py-6">
-        <h2 className="mb-6 text-center text-2xl font-extrabold text-slate-900 dark:text-white">
-          Want to include a tip?
-        </h2>
-
-        {/* Percentage presets */}
-        <div className="mb-4 flex flex-wrap justify-center gap-3">
-          {TIP_PRESETS.map((pct) => {
-            const isActive =
-              tipConfig.mode === 'percentage' && tipConfig.percentage === pct;
-            return (
-              <button
-                key={pct}
-                onClick={() => handlePreset(pct)}
-                className={`h-12 rounded-full border-2 px-6 font-semibold transition-all ${
-                  isActive
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-transparent bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
-                }`}
-              >
-                {pct}%
-              </button>
-            );
-          })}
-          <button
-            onClick={handleNoTip}
-            className={`h-12 rounded-full border-2 px-6 font-semibold transition-all ${
-              tipConfig.mode === 'none'
-                ? 'border-primary bg-primary/10 text-primary'
-                : 'border-transparent bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
-            }`}
-          >
-            No Tip
-          </button>
-        </div>
-
-        {/* Custom amount */}
-        <div className="mb-8 flex justify-center">
-          {showCustom ? (
-            <div className="flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 dark:bg-slate-800">
-              <span className="text-slate-500">$</span>
-              <input
-                type="number"
-                step="0.01"
-                value={customValue}
-                onChange={(e) => handleCustomValueChange(e.target.value)}
-                placeholder="0.00"
-                className="w-24 border-0 bg-transparent text-center text-lg font-semibold text-slate-900 focus:ring-0 dark:text-white"
-                autoFocus
-              />
-            </div>
-          ) : (
-            <button
-              onClick={handleCustomAmount}
-              className="flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400"
-            >
-              <span className="material-symbols-outlined text-lg">edit</span>
-              Custom amount
-            </button>
-          )}
-        </div>
-
-        {/* Summary */}
-        <div className="rounded-xl border border-slate-100 bg-white p-5 dark:border-slate-800 dark:bg-slate-800">
-          <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-primary">
-            Summary
-          </h3>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-slate-600 dark:text-slate-400">
-                Subtotal
-              </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
-                {formatCurrency(billAmountCents)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                Tip
-                {tipConfig.mode === 'percentage' && (
-                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                    {tipConfig.percentage}%
-                  </span>
-                )}
-              </span>
-              <span className="font-semibold text-primary">
-                +{formatCurrency(tipCents)}
-              </span>
-            </div>
-            <div className="border-t border-slate-100 pt-2 dark:border-slate-700">
-              <div className="flex justify-between">
-                <span className="text-lg font-bold text-slate-900 dark:text-white">
-                  Total
-                </span>
-                <span className="text-xl font-extrabold text-slate-900 dark:text-white">
-                  {formatCurrency(grandTotal)}
-                </span>
-              </div>
-            </div>
+      <div className="flex-1 px-4 py-6">
+        {/* Summary Cards */}
+        <div className="mb-8 grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-primary/10 dark:bg-slate-800/50">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Bill</p>
+            <p className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              {formatCurrency(billAmountCents)}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 rounded-xl border border-primary/20 bg-primary/10 p-6 shadow-sm dark:bg-primary/20">
+            <p className="text-sm font-medium text-primary">Tip Amount</p>
+            <p className="text-3xl font-extrabold tracking-tight text-primary">
+              {formatCurrency(tipCents)}
+            </p>
           </div>
         </div>
-      </div>
 
-      <BottomCTA label="Continue" onClick={() => navigate('/people')} />
+        {/* Tip Selection */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+              Select Tip Percentage
+            </h2>
+            <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+              {activeLabel}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <button
+              onClick={handleNoTip}
+              className={`flex h-12 items-center justify-center rounded-xl font-semibold transition-all ${
+                tipConfig.mode === 'none'
+                  ? 'bg-primary text-white shadow-lg shadow-primary/30 ring-2 ring-primary ring-offset-2 dark:ring-offset-bg-dark'
+                  : 'border border-transparent bg-slate-200 text-slate-900 hover:border-primary/50 hover:bg-primary/20 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary/30'
+              }`}
+            >
+              No Tip
+            </button>
+            {TIP_PRESETS.map((pct) => {
+              const isActive =
+                tipConfig.mode === 'percentage' && tipConfig.percentage === pct;
+              return (
+                <button
+                  key={pct}
+                  onClick={() => handlePreset(pct)}
+                  className={`flex h-12 items-center justify-center rounded-xl font-semibold transition-all ${
+                    isActive
+                      ? 'bg-primary text-white shadow-lg shadow-primary/30 ring-2 ring-primary ring-offset-2 dark:ring-offset-bg-dark'
+                      : 'border border-transparent bg-slate-200 text-slate-900 hover:border-primary/50 hover:bg-primary/20 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary/30'
+                  }`}
+                >
+                  {pct}%
+                </button>
+              );
+            })}
+            {showCustom ? (
+              <div className="flex h-12 items-center justify-center rounded-xl bg-primary/10 px-2 ring-2 ring-primary ring-offset-2 dark:ring-offset-bg-dark">
+                <span className="text-primary">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={customValue}
+                  onChange={(e) => handleCustomValueChange(e.target.value)}
+                  placeholder="0.00"
+                  className="w-16 border-0 bg-transparent text-center font-semibold text-primary focus:ring-0"
+                  autoFocus
+                />
+              </div>
+            ) : (
+              <button
+                onClick={handleCustomAmount}
+                className="flex h-12 items-center justify-center rounded-xl border border-transparent bg-slate-200 font-semibold text-slate-900 transition-all hover:border-primary/50 hover:bg-primary/20 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-primary/30"
+              >
+                Custom
+              </button>
+            )}
+          </div>
+
+          {/* Visualization card */}
+          <div className="relative mt-8 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-blue-600 p-6">
+            <div className="relative z-10">
+              <p className="mb-1 text-sm font-medium text-white/80">New Total</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black text-white">
+                  {formatCurrency(grandTotal)}
+                </span>
+                {people.length > 0 && (
+                  <span className="text-sm text-white/60">
+                    {formatCurrency(perPerson)} / person
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="absolute -bottom-4 -right-4 opacity-20">
+              <Icon name="receipt_long" className="text-[96px] text-white" />
+            </div>
+          </div>
+        </section>
+
+        {/* Confirm button */}
+        <div className="mt-10">
+          <button
+            onClick={() => navigate('/people')}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-bold text-white shadow-xl shadow-primary/20 transition-transform active:scale-[0.98] hover:bg-primary/90"
+          >
+            Confirm & Continue
+            <Icon name="arrow_forward" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

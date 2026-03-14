@@ -20,12 +20,10 @@ export function StepPercentageSplit() {
   const tipCents = calculateTipCents(billAmountCents, tipConfig);
   const grandTotal = billAmountCents + tipCents;
 
-  // Build allocation map
   const allocationMap = new Map(
     percentageAllocations.map((a) => [a.personId, a.percentage]),
   );
 
-  // Sum of all percentages except last person
   const othersSum = people.slice(0, -1).reduce((sum, p) => {
     return sum + (allocationMap.get(p.id) ?? 0);
   }, 0);
@@ -48,7 +46,7 @@ export function StepPercentageSplit() {
         </h2>
 
         {/* Progress indicator */}
-        <div className="mb-6 rounded-xl border border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-800">
+        <div className="mb-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-primary/20 dark:bg-slate-800/50">
           <div className="mb-2 flex justify-between text-sm">
             <span className="font-semibold text-slate-600 dark:text-slate-400">
               Allocated
@@ -59,7 +57,7 @@ export function StepPercentageSplit() {
               {othersSum + (isOverAllocated ? 0 : lastPersonPct)}%
             </span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
+          <div className="h-2.5 overflow-hidden rounded-full bg-primary/20">
             <div
               className={`h-full rounded-full transition-all ${isOverAllocated ? 'bg-red-500' : 'nimiq-gradient'}`}
               style={{
@@ -87,7 +85,7 @@ export function StepPercentageSplit() {
             return (
               <div
                 key={person.id}
-                className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 dark:border-slate-800 dark:bg-slate-800"
+                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800/50"
               >
                 <div
                   className={`flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-sm font-bold text-white`}
@@ -96,10 +94,10 @@ export function StepPercentageSplit() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold text-slate-900 dark:text-white">
+                  <p className="truncate font-bold text-slate-900 dark:text-white">
                     {person.name}
                   </p>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-primary">
                     {formatCurrency(amount)}
                   </p>
                 </div>

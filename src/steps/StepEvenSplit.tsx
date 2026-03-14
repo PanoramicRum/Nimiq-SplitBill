@@ -25,7 +25,7 @@ export function StepEvenSplit() {
 
       <div className="flex-1 px-4 py-6">
         {/* Per-person amount hero */}
-        <div className="mb-6 flex flex-col items-center rounded-2xl bg-primary/5 py-8 dark:bg-primary/10">
+        <div className="mb-6 flex flex-col items-center rounded-xl bg-primary/5 py-8 dark:bg-primary/10">
           <Icon name="balance" className="mb-2 text-3xl text-primary" />
           <p className="mb-1 text-sm font-semibold text-primary">
             Each person pays
@@ -51,7 +51,7 @@ export function StepEvenSplit() {
         <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
           Split breakdown
         </h3>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {results.map((result) => {
             const person = personMap.get(result.personId);
             if (!person) return null;
@@ -59,7 +59,7 @@ export function StepEvenSplit() {
             return (
               <div
                 key={result.personId}
-                className="flex items-center justify-between rounded-xl border border-slate-100 bg-white p-3 dark:border-slate-800 dark:bg-slate-800"
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800/50"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -68,7 +68,7 @@ export function StepEvenSplit() {
                     {getInitials(person.name)}
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                    <p className="font-bold text-slate-900 dark:text-white">
                       {person.name}
                     </p>
                     {result.isRemainderHolder && (
@@ -78,7 +78,7 @@ export function StepEvenSplit() {
                     )}
                   </div>
                 </div>
-                <span className="text-lg font-bold text-slate-900 dark:text-white">
+                <span className="text-lg font-bold text-primary">
                   {formatCurrency(result.total)}
                 </span>
               </div>

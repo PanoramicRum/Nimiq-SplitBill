@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0d6cf2;
+  --color-primary: #048acd;
   --color-bg-light: #f5f7f8;
-  --color-bg-dark: #101722;
-  --color-nimiq-gold: #ec991c;
+  --color-bg-dark: #0f1c23;
+  --color-nimiq-gold: #ecb018;
   --color-nimiq-blue: #0582ca;
   --color-nimiq-green: #47b39d;
+  --color-accent-gold: #ecb018;
 
   --font-display: "Manrope", sans-serif;
 
-  --shadow-primary: 0 10px 25px -5px oklch(from #0d6cf2 l c h / 0.25);
+  --shadow-primary: 0 10px 25px -5px oklch(from #048acd l c h / 0.25);
 }
 
 @variant dark (&:where(.dark, .dark *));
@@ -29,10 +30,34 @@ body {
 }
 
 .nimiq-gradient {
-  background: linear-gradient(135deg, #0582ca 0%, #0066ff 100%);
+  background: linear-gradient(135deg, #048acd 0%, #024b70 100%);
+}
+
+.nimiq-gradient-welcome {
+  background: radial-gradient(circle at 50% -20%, #7dd3fc 0%, #38bdf8 30%, #e0f2fe 70%, #f5f7f8 90%);
+}
+
+.dark .nimiq-gradient-welcome {
+  background: radial-gradient(circle at 50% -20%, #05a5f5 0%, #048acd 35%, #0f1c23 85%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer-move 2s infinite;
+}
+
+@keyframes shimmer-move {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-

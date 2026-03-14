@@ -29,70 +29,80 @@ export function StepPeople() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <TopBar title="People" />
+      <TopBar title="Split Bill" />
 
       <div className="flex-1 overflow-y-auto px-4 py-6">
-        <h2 className="mb-2 text-center text-2xl font-extrabold text-slate-900 dark:text-white">
-          Who's joining?
-        </h2>
-        <p className="mb-6 text-center text-sm text-slate-500 dark:text-slate-400">
-          Add everyone who's splitting the bill
+        {/* Main Heading */}
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Who's splitting this?
+        </h1>
+        <p className="mt-2 text-slate-500 dark:text-slate-400">
+          Add your friends to start dividing the expenses.
         </p>
 
         {/* Add person input */}
-        <div className="mb-6 flex gap-2">
-          <input
-            type="text"
-            value={inputName}
-            onChange={(e) => setInputName(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            className="flex-1 rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
-          />
-          <button
-            onClick={handleAdd}
-            className="flex items-center gap-1 rounded-xl bg-primary px-4 py-3 font-semibold text-white transition-all active:scale-95"
-          >
-            <Icon name="person_add" className="text-xl" />
-            Add
-          </button>
+        <div className="mt-6">
+          <label className="mb-2 block text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+            Add person by nickname
+          </label>
+          <div className="flex w-full items-stretch overflow-hidden rounded-xl border border-primary/20 bg-white shadow-sm dark:bg-slate-800/50">
+            <input
+              type="text"
+              value={inputName}
+              onChange={(e) => setInputName(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={placeholder}
+              className="h-14 flex-1 border-none bg-transparent px-4 text-base text-slate-900 placeholder:text-slate-400 focus:ring-0 dark:text-white"
+            />
+            <button
+              onClick={handleAdd}
+              className="flex items-center justify-center bg-primary px-5 text-white transition-colors hover:bg-primary/90"
+            >
+              <Icon name="person_add" className="text-xl" />
+            </button>
+          </div>
         </div>
 
         {/* People list */}
         {people.length > 0 && (
-          <>
-            <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Current squad ({people.length})
+          <div className="mt-8">
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
+              People in the split
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-bold text-primary">
+                {people.length}
+              </span>
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {people.map((person, i) => (
                 <div
                   key={person.id}
-                  className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 dark:border-slate-800 dark:bg-slate-800"
+                  className="flex items-center justify-between rounded-xl border border-primary/5 bg-white p-3 shadow-sm dark:bg-slate-800/40"
                 >
-                  {/* Avatar */}
-                  <div
-                    className={`flex size-10 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-sm font-bold text-white`}
-                  >
-                    {getInitials(person.name)}
+                  <div className="flex items-center gap-3">
+                    {/* Avatar */}
+                    <div
+                      className={`flex size-12 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-lg font-bold text-white`}
+                    >
+                      {getInitials(person.name)}
+                    </div>
+                    <div>
+                      {/* Name (editable) */}
+                      <input
+                        type="text"
+                        value={person.name}
+                        onChange={(e) =>
+                          updatePerson(person.id, { name: e.target.value })
+                        }
+                        className="border-0 bg-transparent p-0 font-bold leading-none text-slate-900 focus:ring-0 dark:text-white"
+                      />
+                      {/* Organizer badge for first person */}
+                      {i === 0 && (
+                        <p className="mt-1 text-xs font-semibold uppercase text-slate-500">
+                          You
+                        </p>
+                      )}
+                    </div>
                   </div>
-
-                  {/* Name (editable) */}
-                  <input
-                    type="text"
-                    value={person.name}
-                    onChange={(e) =>
-                      updatePerson(person.id, { name: e.target.value })
-                    }
-                    className="flex-1 border-0 bg-transparent p-0 font-semibold text-slate-900 focus:ring-0 dark:text-white"
-                  />
-
-                  {/* Organizer badge for first person */}
-                  {i === 0 && (
-                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                      Organizer
-                    </span>
-                  )}
 
                   {/* Remove */}
                   <button
@@ -104,7 +114,7 @@ export function StepPeople() {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         {/* Empty state */}
@@ -122,7 +132,7 @@ export function StepPeople() {
       </div>
 
       <BottomCTA
-        label="Choose split method"
+        label="Continue to Split"
         onClick={() => navigate('/split-method')}
         disabled={people.length < 2}
       />

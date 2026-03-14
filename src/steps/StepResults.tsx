@@ -47,7 +47,6 @@ function QrScannerModal({ onScan, onClose }: { onScan: (address: string) => void
           await videoRef.current.play();
         }
 
-        // Use BarcodeDetector if available (Chrome Android, Safari 16.4+)
         if ('BarcodeDetector' in window) {
           const detector = new (window as any).BarcodeDetector({ formats: ['qr_code'] });
           const scan = async () => {
@@ -56,7 +55,6 @@ function QrScannerModal({ onScan, onClose }: { onScan: (address: string) => void
               const barcodes = await detector.detect(videoRef.current);
               if (barcodes.length > 0) {
                 const raw = barcodes[0].rawValue as string;
-                // Extract Nimiq address from QR — could be raw address or nimiq: URI
                 const address = raw.replace(/^nimiq:/i, '').split('?')[0].trim();
                 if (address.length >= 20) {
                   onScan(address);
@@ -103,7 +101,6 @@ function QrScannerModal({ onScan, onClose }: { onScan: (address: string) => void
       ) : (
         <div className="relative flex flex-1 items-center justify-center">
           <video ref={videoRef} className="h-full w-full object-cover" playsInline muted />
-          {/* Viewfinder overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="size-64 rounded-2xl border-2 border-white/50" />
           </div>
@@ -137,11 +134,9 @@ export function StepResults() {
   const [payError, setPayError] = useState<string | null>(null);
   const [nimPrice, setNimPrice] = useState<number | null>(null);
 
-  // "Someone Else Paid" state
   const [recipientAddress, setRecipientAddress] = useState('');
   const [showQrScanner, setShowQrScanner] = useState(false);
 
-  // "You Paid" state
   const [myAddress, setMyAddress] = useState(organizerAddress ?? '');
   const [addressCopied, setAddressCopied] = useState(false);
   const [requestedPersons, setRequestedPersons] = useState<Set<string>>(new Set());
@@ -169,7 +164,6 @@ export function StepResults() {
     fetchNimPrice();
   }, [fetchNimPrice]);
 
-  // Auto-fetch address from Nimiq Pay
   useEffect(() => {
     if (nimiqAvailable && !myAddress) {
       requestAccounts().then((addr) => {
@@ -228,7 +222,6 @@ export function StepResults() {
     }
   };
 
-  // "Someone Else Paid" — pay a recipient
   const handlePayRecipient = async (amountCents: number) => {
     if (!recipientAddress.trim()) return;
     setPayingFor('self');
@@ -257,7 +250,6 @@ export function StepResults() {
     }
   };
 
-  // "You Paid" — request payment from someone (share a request message)
   const handleRequestPayment = async (result: SplitResult) => {
     const person = personMap.get(result.personId);
     if (!person) return;
@@ -290,7 +282,6 @@ export function StepResults() {
     navigate('/');
   };
 
-  // Find current user's share (organizer = first person)
   const myShare = organizerResult?.total ?? 0;
   const selfPaid = paidPersons.has('self');
 
@@ -301,40 +292,24 @@ export function StepResults() {
       )}
 
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
-        {/* Summary card */}
-        <div className="mb-4 overflow-hidden rounded-2xl shadow-lg">
-          <div className="nimiq-gradient px-5 py-5">
-            <p className="text-xs font-bold uppercase tracking-widest text-white/70">
-              Total Amount
-            </p>
-            <p className="text-3xl font-extrabold text-white">
-              {formatCurrency(grandTotal)}
-            </p>
+        {/* Success Header */}
+        <div className="flex flex-col items-center py-8 text-center">
+          <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-primary/20">
+            <Icon name="check_circle" className="text-5xl text-primary" />
           </div>
-          <div className="bg-white px-5 py-4 dark:bg-slate-800">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-slate-900 dark:text-white">
-                  {splitLabel}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {tipCents > 0
-                    ? `Includes ${tipConfig.mode === 'percentage' ? `${tipConfig.percentage}%` : ''} Tip (${formatCurrency(tipCents)})`
-                    : 'No tip included'}
-                </p>
-              </div>
-              <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
-                {people.length} People
-              </span>
-            </div>
-          </div>
+          <h1 className="mb-2 text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">
+            Success! Bill Split
+          </h1>
+          <p className="text-base font-medium text-slate-500 dark:text-slate-400">
+            Total: <span className="text-slate-900 dark:text-white">{formatCurrency(grandTotal)}</span> · {people.length} People
+          </p>
         </div>
 
-        {/* Individual shares */}
-        <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-          Individual Shares
+        {/* What everyone owes */}
+        <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">
+          What everyone owes
         </h3>
-        <div className="mb-6 space-y-2">
+        <div className="mb-6 space-y-4">
           {results.map((result, i) => {
             const person = personMap.get(result.personId);
             if (!person) return null;
@@ -344,33 +319,47 @@ export function StepResults() {
             return (
               <div
                 key={result.personId}
-                className="rounded-xl border border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-800"
+                className="rounded-xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/50"
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`flex size-12 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-sm font-bold text-white`}
-                  >
-                    {getInitials(person.name)}
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-bold text-slate-900 dark:text-white">
-                      {person.name}
-                    </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {isOrganizer ? 'Organizer' : 'Participant'}
-                    </p>
+                <div className="mb-3 flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`flex size-10 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-sm font-bold text-white`}
+                    >
+                      {getInitials(person.name)}
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-900 dark:text-white">
+                        {person.name}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {isOrganizer ? 'Organizer' : 'Participant'}
+                        {result.isRemainderHolder && ' · Covers rounding'}
+                      </p>
+                    </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-extrabold text-primary">
+                    <p className="text-lg font-bold text-primary">
                       {formatCurrency(result.total)}
                     </p>
-                    {result.isRemainderHolder && (
-                      <p className="text-[10px] font-medium uppercase text-nimiq-gold">
-                        Covers rounding
-                      </p>
-                    )}
                   </div>
                 </div>
+
+                {/* Item tags for item-based splits */}
+                {splitMethod === 'items' && (
+                  <div className="flex flex-wrap gap-2">
+                    {items
+                      .filter((item) => item.assignedTo.includes(result.personId))
+                      .map((item) => (
+                        <span
+                          key={item.id}
+                          className="rounded bg-slate-200 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:bg-slate-700 dark:text-slate-400"
+                        >
+                          {item.name}
+                        </span>
+                      ))}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -378,7 +367,7 @@ export function StepResults() {
 
         {/* Pay error */}
         {payError && (
-          <div className="mb-4 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 dark:bg-red-900/20">
+          <div className="mb-4 flex items-center gap-2 rounded-xl bg-red-50 px-3 py-2 dark:bg-red-900/20">
             <Icon name="error" className="text-lg text-red-500" />
             <span className="text-sm text-red-600 dark:text-red-400">
               {payError}
@@ -391,35 +380,33 @@ export function StepResults() {
           <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Someone Else Paid
           </h3>
-          <div className="rounded-xl border border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-800">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800/50">
             <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
               Send what you owe to one of the participants.
             </p>
 
-            {/* Address input + QR button */}
             <div className="mb-3 flex gap-2">
               <input
                 type="text"
                 value={recipientAddress}
                 onChange={(e) => setRecipientAddress(e.target.value)}
                 placeholder="Enter their Nimiq address"
-                className="flex-1 rounded-lg border-2 border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-900 placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-500"
+                className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-900 placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-500"
               />
               <button
                 onClick={() => setShowQrScanner(true)}
-                className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all active:scale-95"
+                className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all active:scale-95"
                 aria-label="Scan QR code"
               >
                 <Icon name="qr_code_scanner" className="text-xl" />
               </button>
             </div>
 
-            {/* Pay button */}
             {nimiqAvailable ? (
               <button
                 onClick={() => handlePayRecipient(myShare)}
                 disabled={!recipientAddress.trim() || payingFor === 'self' || selfPaid}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-nimiq-blue px-4 py-3 text-sm font-bold text-white transition-all active:scale-[0.98] disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white transition-all active:scale-[0.98] disabled:opacity-50"
               >
                 {payingFor === 'self' ? (
                   <>
@@ -444,7 +431,7 @@ export function StepResults() {
                 href={getNimiqPayStoreUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-nimiq-blue/10 px-4 py-3 text-sm font-semibold text-nimiq-blue transition-all active:scale-[0.98]"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary/10 px-4 py-3 text-sm font-semibold text-primary transition-all active:scale-[0.98]"
               >
                 <Icon name="account_balance_wallet" className="text-base" />
                 Get Nimiq Pay to send payments
@@ -458,12 +445,11 @@ export function StepResults() {
           <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             You Paid
           </h3>
-          <div className="rounded-xl border border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-800">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800/50">
             <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
               Request payment from the others.
             </p>
 
-            {/* Your address input */}
             <div className="mb-4">
               <label className="mb-1.5 block text-xs font-semibold text-slate-500 dark:text-slate-400">
                 Your Nimiq Address (optional)
@@ -474,12 +460,12 @@ export function StepResults() {
                   value={myAddress}
                   onChange={(e) => setMyAddress(e.target.value)}
                   placeholder="NQ..."
-                  className="flex-1 rounded-lg border-2 border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-900 placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-500"
+                  className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-900 placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-500"
                 />
                 {myAddress && (
                   <button
                     onClick={handleCopyAddress}
-                    className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all active:scale-95"
+                    className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all active:scale-95"
                     aria-label="Copy address"
                   >
                     <Icon name={addressCopied ? 'check' : 'content_copy'} className="text-lg" />
@@ -488,7 +474,6 @@ export function StepResults() {
               </div>
             </div>
 
-            {/* Request buttons per person */}
             <div className="space-y-2">
               {othersResults.map((result) => {
                 const person = personMap.get(result.personId);
@@ -500,7 +485,7 @@ export function StepResults() {
                 return (
                   <div
                     key={result.personId}
-                    className="flex items-center gap-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-900"
+                    className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 dark:bg-slate-900/50"
                   >
                     <div
                       className={`flex size-9 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(person.colorIndex)} text-xs font-bold text-white`}
@@ -518,7 +503,7 @@ export function StepResults() {
                     </div>
                     <button
                       onClick={() => handleRequestPayment(result)}
-                      className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition-all active:scale-95 ${
+                      className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold transition-all active:scale-95 ${
                         isRequested
                           ? 'bg-nimiq-green/10 text-nimiq-green'
                           : 'bg-primary/10 text-primary'
@@ -534,45 +519,45 @@ export function StepResults() {
           </div>
         </div>
 
-        {/* Nimiq Pay promo — show when NOT inside Nimiq Pay */}
+        {/* Nimiq Pay promo */}
         {!nimiqAvailable && (
           <a
             href={getNimiqPayStoreUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 flex items-center gap-3 rounded-xl border border-nimiq-blue/20 bg-nimiq-blue/5 p-4 transition-colors active:bg-nimiq-blue/10 dark:bg-nimiq-blue/10"
+            className="mt-2 flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 transition-colors active:bg-primary/10 dark:bg-primary/10"
           >
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-nimiq-blue/10">
-              <Icon name="account_balance_wallet" className="text-xl text-nimiq-blue" />
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+              <Icon name="account_balance_wallet" className="text-xl text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-bold text-nimiq-blue">
+              <p className="text-sm font-bold text-primary">
                 Get Nimiq Pay
               </p>
-              <p className="text-xs text-nimiq-blue/70">
+              <p className="text-xs text-primary/70">
                 Install the app to pay your friends with NIM
               </p>
             </div>
-            <Icon name="arrow_forward" className="text-lg text-nimiq-blue/50" />
+            <Icon name="arrow_forward" className="text-lg text-primary/50" />
           </a>
         )}
       </div>
 
       {/* Bottom actions */}
-      <div className="safe-bottom space-y-2 bg-gradient-to-t from-white via-white to-white/0 px-6 pb-6 pt-4 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900/0">
+      <div className="safe-bottom space-y-3 px-6 pb-6 pt-4">
         <button
           onClick={handleShare}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-bold text-white shadow-primary transition-all active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-bold text-white shadow-xl shadow-primary/20 transition-all active:scale-[0.98]"
         >
           <Icon name={copied ? 'check' : 'share'} className="text-xl" />
           {copied ? 'Copied!' : 'Share Summary'}
         </button>
         <button
           onClick={handleStartOver}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white px-6 py-4 text-base font-bold text-slate-700 transition-all active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-4 text-base font-bold text-slate-700 transition-all active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
         >
           <Icon name="refresh" className="text-xl" />
-          Start Over
+          New Split
         </button>
       </div>
     </div>

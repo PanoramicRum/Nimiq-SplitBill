@@ -5,38 +5,26 @@ interface ProgressStepperProps {
 }
 
 export function ProgressStepper({ currentStep }: ProgressStepperProps) {
-  return (
-    <div className="flex items-center justify-center gap-3 px-6 py-3">
-      {STEP_LABELS.map((label, i) => {
-        const step = i + 1;
-        const isActive = step === currentStep;
-        const isCompleted = step < currentStep;
+  const totalSteps = STEP_LABELS.length;
+  const percentage = Math.round((currentStep / totalSteps) * 100);
 
-        return (
-          <div key={label} className="flex flex-col items-center gap-1">
-            <div
-              className={`flex size-2.5 rounded-full transition-all ${
-                isActive
-                  ? 'scale-125 bg-primary'
-                  : isCompleted
-                    ? 'bg-primary/60'
-                    : 'bg-slate-200 dark:bg-slate-700'
-              }`}
-            />
-            <span
-              className={`text-[10px] font-bold uppercase tracking-wider ${
-                isActive
-                  ? 'text-primary'
-                  : isCompleted
-                    ? 'text-primary/60'
-                    : 'text-slate-400 dark:text-slate-600'
-              }`}
-            >
-              {label}
-            </span>
-          </div>
-        );
-      })}
+  return (
+    <div className="flex flex-col gap-3 px-6 py-3">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          Step {currentStep} of {totalSteps}
+          <span className="ml-2 text-xs font-medium text-slate-400 dark:text-slate-500">
+            {STEP_LABELS[currentStep - 1]}
+          </span>
+        </p>
+        <p className="text-sm font-bold text-primary">{percentage}%</p>
+      </div>
+      <div className="h-2.5 w-full overflow-hidden rounded-full bg-primary/20">
+        <div
+          className="h-full rounded-full bg-primary transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
     </div>
   );
 }
