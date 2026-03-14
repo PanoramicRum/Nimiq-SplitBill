@@ -52,7 +52,7 @@ export function StepStart() {
   };
 
   return (
-    <div className="nimiq-gradient-welcome relative flex h-full flex-col overflow-hidden">
+    <div className="nimiq-gradient-welcome relative flex min-h-full flex-col overflow-y-auto">
       {/* Header */}
       <header className="flex items-center justify-between p-6">
         <div className="flex items-center gap-2">
@@ -79,9 +79,9 @@ export function StepStart() {
       {/* Main Content */}
       <main className="flex flex-1 flex-col items-center justify-center px-6 text-center">
         {/* Hero Illustration */}
-        <div className="relative mb-12 flex aspect-square w-full max-w-sm items-center justify-center">
+        <div className="relative mb-8 flex w-full max-w-xs items-center justify-center sm:mb-12 sm:max-w-sm">
           <div className="absolute inset-0 rounded-full bg-primary/20 blur-[80px]" />
-          <div className="relative flex h-64 w-64 rotate-3 transform flex-col items-center justify-center gap-4 rounded-xl border border-slate-200/30 bg-white/20 shadow-2xl backdrop-blur-sm transition-transform duration-500 hover:rotate-0 dark:border-white/8 dark:bg-white/3">
+          <div className="relative flex h-48 w-48 rotate-3 transform flex-col items-center justify-center gap-4 rounded-xl border border-slate-200/30 bg-white/20 shadow-2xl backdrop-blur-sm transition-transform duration-500 hover:rotate-0 sm:h-64 sm:w-64 dark:border-white/8 dark:bg-white/3">
             <Icon name="receipt_long" className="text-6xl text-primary" />
             <div className="h-2 w-32 rounded-full bg-slate-900/10 dark:bg-white/10" />
             <div className="h-2 w-24 rounded-full bg-slate-900/10 dark:bg-white/10" />
